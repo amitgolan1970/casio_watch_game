@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -74,9 +75,14 @@ public class EndGame extends AppCompatActivity implements View.OnClickListener {
         } catch (Exception e) {
         }
         statusTxt.setText("You " + state);
+        MediaPlayer mp ;
+        mp = MediaPlayer.create(this, R.raw.win_ya);
         statusTxt.setTextColor(ContextCompat.getColor(this, R.color.teal_700));
-        if(state.equals("LOST"))
+        if(state.equals("LOST")) {
+            mp = MediaPlayer.create(this, R.raw.fail_loose);
             statusTxt.setTextColor(ContextCompat.getColor(this, R.color.red));
+        }
+        mp.start();
         scoreInfoTxt.setText("Score " + score);
         handleHighScore(score);
     }
