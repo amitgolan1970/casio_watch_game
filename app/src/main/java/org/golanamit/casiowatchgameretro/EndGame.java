@@ -3,17 +3,20 @@ package org.golanamit.casiowatchgameretro;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class EndGame extends AppCompatActivity implements View.OnClickListener {
 
-    TextView statusTxt, scoreInfoTxt;
-    Button yesBtn, noBtn;
+    TextView statusTxt, scoreInfoTxt, highScoreTxt;
+    Button yesBtn, noBtn, clearHighScoreBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +33,18 @@ public class EndGame extends AppCompatActivity implements View.OnClickListener {
     private void init() {
         statusTxt = findViewById(R.id.statusTxtId);
         scoreInfoTxt = findViewById(R.id.scoringInfoTxtId);
+        highScoreTxt = findViewById(R.id.highScoreInfotxtId);
         yesBtn = findViewById(R.id.yesBtnId);
+        yesBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
         noBtn = findViewById(R.id.noBtnId);
+        noBtn.setBackgroundColor(getResources().getColor(R.color.red));
+        clearHighScoreBtn = findViewById(R.id.clearHighScoreBtnId);
     }
 
     private void setListeners() {
         yesBtn.setOnClickListener(this);
         noBtn.setOnClickListener(this);
+        clearHighScoreBtn.setOnClickListener(this);
     }
 
     @Override
@@ -48,6 +56,12 @@ public class EndGame extends AppCompatActivity implements View.OnClickListener {
             this.finishAffinity();
             System.exit(0);
             finishAndRemoveTask();
+        } else if(v.getId() == clearHighScoreBtn.getId()) {
+            clearHighScoreBtn.setVisibility(View.INVISIBLE);
+            highScoreTxt.setVisibility(View.INVISIBLE);
+            SharedPreferences prefs = getSharedPreferences("score", Context.MODE_PRIVATE);
+            prefs.edit().clear().commit();
+            prefs.edit().remove("score").commit();
         }
     }
 
@@ -58,12 +72,41 @@ public class EndGame extends AppCompatActivity implements View.OnClickListener {
             score = getIntent().getStringExtra("SCORE");
             state = getIntent().getStringExtra("STATE");
         } catch (Exception e) {
-
         }
         statusTxt.setText("You " + state);
         statusTxt.setTextColor(ContextCompat.getColor(this, R.color.teal_700));
         if(state.equals("LOST"))
             statusTxt.setTextColor(ContextCompat.getColor(this, R.color.red));
         scoreInfoTxt.setText("Score " + score);
+        handleHighScore(score);
+    }
+
+    private void handleHighScore(String score) {
+        SharedPreferences prefs = getSharedPreferences("score", Context.MODE_PRIVATE);
+        String scoreFromSP = prefs.getString("score", null);
+        if(scoreFromSP == null) {
+            clearHighScoreBtn.setVisibility(View.INVISIBLE);
+            highScoreTxt.setVisibility(View.INVISIBLE);
+            if(!score.equals("0")) {
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("score", score);
+                editor.apply();
+                Toast.makeText(getApplicationContext(), "registering high score for the first time. congratulation",
+                        Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
+        highScoreTxt.setText("High score: " + scoreFromSP);
+        clearHighScoreBtn.setVisibility(View.VISIBLE);
+        highScoreTxt.setVisibility(View.VISIBLE);
+        int scoreCurrInt = Integer.parseInt(score);
+        int scoreSpInt = Integer.parseInt(scoreFromSP);
+        if(scoreCurrInt > scoreSpInt) {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("score", score);
+            editor.apply();
+            highScoreTxt.setText("Last high score record: " + scoreFromSP);
+            Toast.makeText(getApplicationContext(), "new high score record. congratulation", Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -17,19 +17,18 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.152" />
+        app:layout_constraintVertical_bias="0.051" />
 
     <TextView
         android:id="@+id/scoringInfoTxtId"
         android:layout_width="82dp"
         android:layout_height="61dp"
+        android:layout_marginTop="52dp"
         android:gravity="center|center_horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/statusTxtId"
-        app:layout_constraintVertical_bias="0.076" />
+        app:layout_constraintTop_toBottomOf="@+id/statusTxtId" />
 
     <TextView
         android:id="@+id/palyAgainTxtId"
@@ -39,10 +38,9 @@
         android:text="A.G(c) Play Again ?"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scoringInfoTxtId"
-        app:layout_constraintVertical_bias="0.206" />
+        app:layout_constraintVertical_bias="0.527" />
 
     <Button
         android:id="@+id/yesBtnId"
@@ -67,4 +65,35 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/palyAgainTxtId"
         app:layout_constraintVertical_bias="0.013" />
+
+    <TextView
+        android:id="@+id/highScoreInfotxtId"
+        android:layout_width="139dp"
+        android:layout_height="41dp"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:hint="High score record"
+        android:padding="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/palyAgainTxtId"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scoringInfoTxtId"
+        app:layout_constraintVertical_bias="0.382"
+        tools:visibility="invisible" />
+
+    <Button
+        android:id="@+id/clearHighScoreBtnId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:gravity="center"
+        android:padding="3dp"
+        android:text="Clear high score"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/palyAgainTxtId"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/highScoreInfotxtId"
+        app:layout_constraintVertical_bias="0.15" />
 </androidx.constraintlayout.widget.ConstraintLayout>
