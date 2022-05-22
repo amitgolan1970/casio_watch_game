@@ -44,26 +44,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void startGame() {
         clearTextArray();
         brd.resetArray();
-        brd.setGameLevel(GameLevel.MEDIUM);
-        long period = PERIODS[GameLevel.MEDIUM.ordinal()];
-
-        String tmpGameLevel = GameLevel.MEDIUM.name();
-        try {
-            tmpGameLevel = getIntent().getStringExtra("GAMELEVEL");
-        } catch (Exception e) {
-        }
-        if(tmpGameLevel == null) {
-            System.out.println("probably returned from otheractivity");
-        } else {
-            if (tmpGameLevel.equals(GameLevel.EASY.name())) {
-                brd.setGameLevel(GameLevel.EASY);
-                period = PERIODS[GameLevel.EASY.ordinal()];
-            } else if (tmpGameLevel.equals(GameLevel.HARD.name())) {
-                brd.setGameLevel(GameLevel.HARD);
-                period = PERIODS[GameLevel.HARD.ordinal()];
-            }
-        }
-
+        brd.setGameLevel(WelcomeSetLevel.gameLevel);
+        long period = PERIODS[WelcomeSetLevel.gameLevel.ordinal()];
         long delay = 1000L;
         repeatedTask = new TimerTask() {
             @Override

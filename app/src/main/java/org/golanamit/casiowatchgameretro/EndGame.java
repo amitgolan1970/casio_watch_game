@@ -54,7 +54,6 @@ public class EndGame extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View v) {
         if(v.getId() == yesBtn.getId()) {
             Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("GAMELEVEL", WelcomeSetLevel.gameLevel.name());
             startActivity(intent);
         } else if(v.getId() == noBtn.getId()) {
             this.finishAffinity();

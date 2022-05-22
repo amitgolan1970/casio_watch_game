@@ -72,7 +72,6 @@ public class WelcomeSetLevel extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         if(v.getId() == startGameBtn.getId()) {
             Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("GAMELEVEL", gameLevel.name());
             startActivity(intent);
         }
     }
