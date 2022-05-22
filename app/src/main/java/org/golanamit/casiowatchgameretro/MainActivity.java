@@ -26,6 +26,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TimerTask repeatedTask;
     Timer timer;
 
+    //  index 0 = easy, 1 = medium, 2 = hard
+    private static final long[] PERIODS = {1000L * 3L, 1000L * 2L, 1000L * 1L};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +44,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void startGame() {
         clearTextArray();
         brd.resetArray();
+        brd.setGameLevel(GameLevel.MEDIUM);
+        long period = PERIODS[GameLevel.MEDIUM.ordinal()];
+
+        String tmpGameLevel = GameLevel.MEDIUM.name();
+        try {
+            tmpGameLevel = getIntent().getStringExtra("GAMELEVEL");
+        } catch (Exception e) {
+        }
+        if(tmpGameLevel == null) {
+            System.out.println("probably returned from otheractivity");
+        } else {
+            if (tmpGameLevel.equals(GameLevel.EASY.name())) {
+                brd.setGameLevel(GameLevel.EASY);
+                period = PERIODS[GameLevel.EASY.ordinal()];
+            } else if (tmpGameLevel.equals(GameLevel.HARD.name())) {
+                brd.setGameLevel(GameLevel.HARD);
+                period = PERIODS[GameLevel.HARD.ordinal()];
+            }
+        }
+
+        long delay = 1000L;
         repeatedTask = new TimerTask() {
             @Override
             public void run() {
@@ -62,8 +86,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         };
         timer = new Timer("Timer");
-        long delay = 1000L;
-        long period = 1000L * 2L;
         timer.scheduleAtFixedRate(repeatedTask, delay, period);
     }
 
@@ -75,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
             }
         });
+        scoreTxt.setText("");
         Intent intent = new Intent(MainActivity.this, EndGame.class);
         intent.putExtra("SCORE", String.valueOf(brd.getScore()));
         intent.putExtra("STATE", state);

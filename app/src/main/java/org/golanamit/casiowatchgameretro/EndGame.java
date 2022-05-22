@@ -17,7 +17,7 @@ import android.widget.Toast;
 public class EndGame extends AppCompatActivity implements View.OnClickListener {
 
     TextView statusTxt, scoreInfoTxt, highScoreTxt;
-    Button yesBtn, noBtn, clearHighScoreBtn;
+    Button yesBtn, noBtn, clearHighScoreBtn, chooseLevelBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,18 +40,21 @@ public class EndGame extends AppCompatActivity implements View.OnClickListener {
         noBtn = findViewById(R.id.noBtnId);
         noBtn.setBackgroundColor(getResources().getColor(R.color.red));
         clearHighScoreBtn = findViewById(R.id.clearHighScoreBtnId);
+        chooseLevelBtn = findViewById(R.id.chooseGameLevelBtnId);
     }
 
     private void setListeners() {
         yesBtn.setOnClickListener(this);
         noBtn.setOnClickListener(this);
         clearHighScoreBtn.setOnClickListener(this);
+        chooseLevelBtn.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         if(v.getId() == yesBtn.getId()) {
             Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("GAMELEVEL", WelcomeSetLevel.gameLevel.name());
             startActivity(intent);
         } else if(v.getId() == noBtn.getId()) {
             this.finishAffinity();
@@ -63,6 +66,9 @@ public class EndGame extends AppCompatActivity implements View.OnClickListener {
             SharedPreferences prefs = getSharedPreferences("score", Context.MODE_PRIVATE);
             prefs.edit().clear().commit();
             prefs.edit().remove("score").commit();
+        } else if(v.getId() == chooseLevelBtn.getId()) {
+            Intent intent = new Intent(this, WelcomeSetLevel.class);
+            startActivity(intent);
         }
     }
 

@@ -3,7 +3,8 @@ package org.golanamit.casiowatchgameretro;
 import java.util.Random;
 
 public class Board {
-    private static final int GAME_ITERATIONS = 30;
+    private static final int[] CYCLES = {30, 40, 50};
+    private static int GAME_ITERATIONS = CYCLES[1];
     public static final int ARR_SIZE = 10;
     public static final String BONUS = "~";
     public static final String SPACE = " ";
@@ -14,6 +15,19 @@ public class Board {
     private String userNumber = "0";
 
     private int score = 0;
+
+    public void setEasyLevelIterations()
+    {
+        GAME_ITERATIONS = CYCLES[GameLevel.EASY.ordinal()];
+    }
+
+    public void setMediumLevelIterations() {
+        GAME_ITERATIONS = CYCLES[GameLevel.MEDIUM.ordinal()];
+    }
+
+    public void setHardLevelIterations() {
+        GAME_ITERATIONS = CYCLES[GameLevel.HARD.ordinal()];
+    }
 
     public int getScore() {
         return this.score;
@@ -185,4 +199,19 @@ public class Board {
         userNumber = String.valueOf(userNumInt);
     }
 
+    public void setGameLevel(GameLevel level) {
+        switch (level) {
+            case EASY:
+                setEasyLevelIterations();
+                break;
+            case MEDIUM:
+                setMediumLevelIterations();
+                break;
+            case HARD:
+                setHardLevelIterations();
+                break;
+            default:
+                System.err.println("Should never reach here");
+        }
+    }
 }
