@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void startGame() {
         clearTextArray();
         brd.resetArray();
-        brd.setGameLevel(WelcomeSetLevel.gameLevel);
+        brd.setGameLevel();
         long period = PERIODS[WelcomeSetLevel.gameLevel.ordinal()];
         long delay = 1000L;
         repeatedTask = new TimerTask() {

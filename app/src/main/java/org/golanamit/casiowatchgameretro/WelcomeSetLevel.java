@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class WelcomeSetLevel extends AppCompatActivity implements View.OnClickListener {
 
@@ -24,22 +23,22 @@ public class WelcomeSetLevel extends AppCompatActivity implements View.OnClickLi
 
         init();
 
-        setlisteners();
+        setListeners();
     }
 
     private void init() {
         seekBar = findViewById(R.id.seekBarId);
         gameLevelInfoTxtTv = findViewById(R.id.gamelevelInfoTxtId);
         startGameBtn = findViewById(R.id.startGameBtnId);
+        gameLevelInfoTxtTv.setText("Level: " + gameLevel.name());
     }
 
-    private void setlisteners() {
+    private void setListeners() {
         startGameBtn.setOnClickListener(this);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-//                Toast.makeText(getApplicationContext(),"seekbar progress: "+progress, Toast.LENGTH_SHORT).show();
                 switch (progress) {
                     case 0:
                         gameLevel = GameLevel.EASY;

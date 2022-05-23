@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Board {
     private static final int[] CYCLES = {30, 40, 50};
-    private static int GAME_ITERATIONS = CYCLES[1];
+    private static int GAME_ITERATIONS = CYCLES[WelcomeSetLevel.gameLevel.ordinal()];
     public static final int ARR_SIZE = 10;
     public static final String BONUS = "~";
     public static final String SPACE = " ";
@@ -13,25 +13,12 @@ public class Board {
     private Random rnd = new Random();
 
     private String userNumber = "0";
-
     private int score = 0;
-
-    public void setEasyLevelIterations()
-    {
-        GAME_ITERATIONS = CYCLES[GameLevel.EASY.ordinal()];
-    }
-
-    public void setMediumLevelIterations() {
-        GAME_ITERATIONS = CYCLES[GameLevel.MEDIUM.ordinal()];
-    }
-
-    public void setHardLevelIterations() {
-        GAME_ITERATIONS = CYCLES[GameLevel.HARD.ordinal()];
-    }
 
     public int getScore() {
         return this.score;
     }
+
     public void increaseScoreBy(int points) {
         this.score += points;
     }
@@ -199,19 +186,7 @@ public class Board {
         userNumber = String.valueOf(userNumInt);
     }
 
-    public void setGameLevel(GameLevel level) {
-        switch (level) {
-            case EASY:
-                setEasyLevelIterations();
-                break;
-            case MEDIUM:
-                setMediumLevelIterations();
-                break;
-            case HARD:
-                setHardLevelIterations();
-                break;
-            default:
-                System.err.println("Should never reach here");
-        }
+    public void setGameLevel() {
+        GAME_ITERATIONS = CYCLES[WelcomeSetLevel.gameLevel.ordinal()];
     }
 }
