@@ -1,5 +1,6 @@
 package org.golanamit.casiowatchgameretro;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class Board {
@@ -100,11 +101,14 @@ public class Board {
     }
 
     public void printArray() {
+        System.out.println(Arrays.toString(places));
+        /*
         System.out.print("{");
         for(int i = 0; i < places.length; i++) {
             System.out.print(places[i] + SPACE);
         }
         System.out.println("}");
+        */
     }
 
     public boolean didWeLoose() {
@@ -117,7 +121,7 @@ public class Board {
 
     public int returnLastFilledElemIndex() {
         int ind = 0;
-        for(int i = 0; i < places.length-1; i++) {
+        for(int i = 0; i < places.length; i++) {
             if (!places[i].equals(SPACE))
                 ind = i;
         }
